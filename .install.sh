@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-# Install xCode cli tools
-echo "Installing commandline tools..."
+# Install xCode CLI tools
+echo "Installing command-line tools..."
 xcode-select --install
 
 # Homebrew
@@ -14,6 +14,7 @@ brew analytics off
 echo "Tapping Brew..."
 brew tap FelixKratz/formulae
 brew tap koekeishiya/formulae
+brew tap homebrew/cask-fonts
 
 ## Formulae
 echo "Installing Brew Formulae..."
@@ -34,57 +35,82 @@ brew install switchaudio-osx
 brew install skhd
 brew install sketchybar
 brew install borders
-brew install yabai
+brew install aerospace  # Replaced yabai with aerospace
 
-### Science
-brew install mactex
-brew install hdf5
-brew install gnuplot
-brew install texlab
-
-### Terminal
+### Terminal & CLI Enhancements
 brew install neovim
 brew install helix
 brew install starship
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
 brew install zoxide
-
-### Nice to have
-brew install lulu
+brew install eza
+brew install bat
+brew install fd
+brew install tldr
+brew install fzf
+brew install lazygit
 brew install btop
 brew install svim
-brew install lazygit
-brew install wireguard-go
 brew install dooit
+brew install git
+brew install tmate
+brew install mtr
+brew install iperf
+brew install duf
+brew install ncdu
+brew install exa
 
 ### Custom HEAD only forks
 brew install fnnn --head # nnn fork (changed colors, keymappings)
 
 ## Casks
 echo "Installing Brew Casks..."
-### Terminals & Browsers
-brew install --cask alacritty
-brew install --cask kitty
-brew install --cask orion
+### Terminal & Development
+brew install --cask ghostty
+brew install --cask iterm2
+brew install --cask visual-studio-code
+brew install --cask devutils
+brew install --cask postman
+brew install --cask chatgpt
+brew install --cask grammarly
 
-### Office
-brew install --cask inkscape
-brew install --cask libreoffice
-brew install --cask zoom
-brew install --cask meetingbar
+### System Utilities & Enhancements
+brew install --cask soundsource
+brew install --cask onyx
+brew install --cask xnip
+brew install --cask vesktop
+brew install --cask parsec
+brew install --cask openvpn-connect
+brew install --cask maccy
+brew install --cask ice
+brew install --cask itsycal
+brew install --cask hyperkey
+brew install --cask capslocknodelay
+brew install --cask mos
+brew install --cask latest
+brew install --cask tacky-borders
+brew install --cask porting-kit
+
+### Microsoft Suite
+brew install --cask microsoft-office
+brew install --cask powershell
+brew install --cask microsoft-outlook
+brew install --cask microsoft-teams
+brew install --cask slack
+brew install --cask miro
+brew install --cask adobe-acrobat-reader
+
+### Media & Productivity
 brew install --cask skim
 brew install --cask vlc
+brew install --cask spotify
 
-### Reversing
+### Reversing & Development
 brew install --cask machoview
 brew install --cask hex-fiend
 brew install --cask cutter
 brew install --cask sloth
-
-### Nice to have
-brew install --cask alfred
-brew install --cask spotify
 
 ### Fonts
 brew install --cask sf-symbols
@@ -93,53 +119,73 @@ brew install --cask font-sf-pro
 brew install --cask font-hack-nerd-font
 brew install --cask font-jetbrains-mono
 brew install --cask font-fira-code
+brew install --cask font-maple-mono-nf  # Added Maple Font
 
 # Mac App Store Apps
 echo "Installing Mac App Store Apps..."
-mas install 1451685025 #Wireguard
-mas install 497799835 #xCode
-mas install 1480933944 #Vimari
+mas install 1451685025 # Wireguard
+mas install 497799835  # xCode
+mas install 1480933944 # Vimari
 
-# macOS Settings
-echo "Changing macOS defaults..."
-defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-defaults write com.apple.spaces spans-displays -bool false
-defaults write com.apple.dock autohide -bool true
-defaults write com.apple.dock "mru-spaces" -bool "false"
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
-defaults write com.apple.LaunchServices LSQuarantine -bool false
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+# macOS Performance & Arch-Like Defaults
+echo "Applying macOS performance optimizations..."
+## General Performance Tweaks
+sudo pmset -a hibernatemode 0       # Disable hibernation
+sudo pmset -a standby 0             # Disable standby mode
+sudo pmset -a autopoweroff 0        # Disable auto power off
+sudo systemsetup -setcomputersleep Off > /dev/null
+sudo systemsetup -setdisplaysleep Off > /dev/null
+sudo systemsetup -setharddisksleep Off > /dev/null
+
+## Faster Key Repeat & Trackpad Tweaks
 defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-defaults write NSGlobalDomain _HIHideMenuBar -bool true
-defaults write NSGlobalDomain AppleHighlightColor -string "0.65098 0.85490 0.58431"
-defaults write NSGlobalDomain AppleAccentColor -int 1
-defaults write com.apple.screencapture location -string "$HOME/Desktop"
-defaults write com.apple.screencapture disable-shadow -bool true
-defaults write com.apple.screencapture type -string "png"
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
+defaults write NSGlobalDomain com.apple.mouse.scaling -1
+
+## Reduce Animations & UI Enhancements
+defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock autohide -bool true
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 defaults write com.apple.finder DisableAllAnimations -bool true
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
-defaults write com.apple.Finder AppleShowAllFiles -bool true
+
+## Dock & Spaces Tweaks
+defaults write com.apple.spaces spans-displays -bool false
+defaults write com.apple.dock "mru-spaces" -bool "false"
+defaults write com.apple.dock show-recents -bool false
+
+## Finder Tweaks for Performance
+defaults write com.apple.finder AppleShowAllFiles -bool true
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 defaults write com.apple.finder ShowStatusBar -bool false
-defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool YES
-defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-defaults write -g NSWindowShouldDragOnGesture YES
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.Finder AppleShowAllFiles -bool true
 
-## Fix for MX Master 3S
+## Keyboard Navigation in UI
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+## Disable Dashboard
+defaults write com.apple.dashboard mcx-disabled -bool true
+
+## Disable System Sounds
+defaults write com.apple.systemsound "com.apple.sound.beep.volume" -float 0
+defaults write NSGlobalDomain "com.apple.sound.uiaudio.enabled" -int 0
+
+## Disable Siri
+defaults write com.apple.assistant.supported -bool false
+launchctl disable gui/$(id -u)/com.apple.Siri.agent
+
+## Disable Auto-Correct
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+## Disable Auto-Capitalization
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+# Fix for MX Master 3S
 sudo defaults write /Library/Preferences/com.apple.airport.bt.plist bluetoothCoexMgmt Hybrid
 
 # Copying and checking out configuration files
@@ -154,41 +200,15 @@ rm -rf /tmp/SFMono_Nerd_Font/
 
 curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.28/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
 
-# Installing helix language server
-git clone https://github.com/estin/simple-completion-language-server.git /tmp/simple-completion-language-server
-(cd /tmp/simple-completion-language-server && cargo install --path .)
-rm -rf /tmp/simple-completion-language-server
-
-
 source $HOME/.zshrc
-cfg config --local status.showUntrackedFiles no
-
-# Python Packages (mainly for data science)
-echo "Installing Python Packages..."
-curl https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh | sh
-source $HOME/.zshrc
-conda install -c apple tensorflow-deps
-conda install -c conda-forge pybind11
-conda install matplotlib
-conda install jupyterlab
-conda install seaborn
-conda install opencv
-conda install joblib
-conda install pytables
-pip install tensorflow-macos
-pip install tensorflow-metal
-pip install debugpy
-pip install sklearn
 
 # Start Services
-echo "Starting Services (grant permissions)..."
+echo "Starting Services..."
 brew services start skhd
-brew services start fyabai
+brew services start aerospace
 brew services start sketchybar
 brew services start borders
 brew services start svim
 
 csrutil status
-echo "(optional) Disable SIP for advanced yabai features."
-echo "(optional) Add sudoer manually:\n '$(whoami) ALL = (root) NOPASSWD: sha256:$(shasum -a 256 $(which yabai) | awk "{print \$1;}") $(which yabai) --load-sa' to '/private/etc/sudoers.d/yabai'"
-echo "Installation complete...\n"
+echo "Installation complete!"
